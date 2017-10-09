@@ -52,26 +52,42 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
   }
 
   getNode = (node): void => {
-    const { width, heigth } = node.getBoundingClientRect();
-    this.setState()
+    const { width, height } = node.getBoundingClientRect();
+    console.log('got width', width);
+    this.setState({
+      slideDimensions: { width, height },
+    })
   }
 
   render() {
+    const { slideDimensions, currentSlide } = this.state;
+    const { height, width } = slideDimensions;
+    const numberSlides = this.props.children.length;
+    console.log('numberSlides', numberSlides);
     return (
       <div
-        style={{ width: '50%', height: '50%', overflow: 'hidden', backgroundColor: 'black'}}
+        style={{ width: '100%', height: '100%', overflow: 'hidden', backgroundColor: 'white'}}
         tabIndex="0"
         onKeyDown={this.handleKeyPress}
         ref={this.getNode}
         >
-          <div style={{ color: 'white' }}>{this.state.currentSlide}</div>
-          <div>
+          <div style={{
+            height,
+            width: width * numberSlides,
+            display: 'flex',
+            flexWrap: 'nowrap',
+            position: 'relative',
+            right: currentSlide * width,
+            transition: 'right 500ms ease-in-out'
+          }}>
             {React.Children.toArray(this.props.children).map((child, i) => {
-              console.log('got slide', child);
               return (
                 <div
                   key={`SLIDE_${i}`}
-                  style={{ backgroundColor: 'blue' }}
+                  style={{
+                    ...slideDimensions,
+                    display: 'flex',
+                  }}
                   >
                     {child}
                 </div>
