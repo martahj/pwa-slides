@@ -1,11 +1,13 @@
+// @flow
 import React from 'react';
+import SlideWrapper from '../containers/SlideWrapper';
+import SlideHeader from '../components/SlideHeader';
+import SlideBody from '../components/SlideBody';
+import CodeBlock from '../components/CodeBlock';
+import List from '../components/List';
 
-const Activate = () => (
-  <div>
-  Activate
-  {`
-    Activate
-    this.addEventListener('install', function(event) {
+const installCode = `
+this.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open('v2').then(function(cache) {
       return cache.addAll([
@@ -22,7 +24,9 @@ const Activate = () => (
     })
   );
 });
+`;
 
+const activateCode = `
 this.addEventListener('activate', function(event) {
   var cacheWhitelist = ['v2'];
 
@@ -36,14 +40,39 @@ this.addEventListener('activate', function(event) {
     })
   );
 });
-   - happens after a successful install
-    - If you update your sw, the new one will be installed, and will activate
-    when there are no longer any pages loaded using the old sw
-    - Update cache number
-    - Do stuff that would have broken the previous one
-    - delete old caches; browser has a limit of the amount of data any particular sw can store, and may delete the cache for a particular origin
-  `}
-  </div>
+`
+
+const bullets = [
+  'Happens after a successful install',
+  `Updated service workers will install but will not activate until there
+    are no more pages loaded using the old service worker`,
+  `When the service worker updates, it is free to take actions that would have
+    broken the previous one, such as deleting old caches`,
+  `An updated service worker may update cache number to show that it is using
+    the new cache`,
+  `Browsers have a limit of the amount of data any particular service worker can
+    store, and may delete the cache for a particular origin, particularly if it
+    gets too large`
+];
+
+const Activate = () => (
+  <SlideWrapper>
+    <SlideHeader>
+      Activate Event
+    </SlideHeader>
+    <SlideBody>
+      <CodeBlock>
+        {installCode}
+      </CodeBlock>
+      <CodeBlock>
+        {activateCode}
+      </CodeBlock>
+      <List
+        items={bullets}
+        useBullets
+      />
+    </SlideBody>
+  </SlideWrapper>
 );
 
 export default Activate;

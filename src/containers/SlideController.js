@@ -37,6 +37,15 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
       }
     };
   }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.updateNodeDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateNodeDimensions);
+  }
+
   handleKeyPress = (event): void => {
     const { keyCode } = event;
     if (keyCode === 39) this.handleForwardPress();
@@ -52,7 +61,13 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
   }
 
   getNode = (node): void => {
-    const { width, height } = node.getBoundingClientRect();
+    this.node = node;
+    this.updateNodeDimensions();
+  }
+
+  updateNodeDimensions = () => {
+    console.log('updating node dimensins');
+    const { width, height } = this.node.getBoundingClientRect();
     console.log('got width', width);
     this.setState({
       slideDimensions: { width, height },
@@ -63,7 +78,6 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
     const { slideDimensions, currentSlide } = this.state;
     const { height, width } = slideDimensions;
     const numberSlides = this.props.children.length;
-    console.log('numberSlides', numberSlides);
     return (
       <div
         style={{ width: '100%', height: '100%', overflow: 'hidden', backgroundColor: 'white'}}

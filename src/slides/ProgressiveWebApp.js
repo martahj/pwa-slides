@@ -1,5 +1,9 @@
 // @flow
 import React from 'react';
+import SlideWrapper from '../containers/SlideWrapper';
+import SlideHeader from '../components/SlideHeader';
+import SlideBody from '../components/SlideBody';
+import List from '../components/List';
 
 const makeAspect = (buzzword, desc) => ({ buzzword, desc });
 
@@ -47,21 +51,14 @@ const aspects = [
 ];
 
 const ProgressiveWebApp = () => (
-  <div>
-    <h2>
-      What is a Progressive Web App?
-    </h2>
-      <ul>
-        {aspects.map(({ buzzword, desc }) => (
-          <li>
-            <span>
-              {buzzword}
-            </span>
-              {desc}
-          </li>
-        ))}
-      </ul>
-  </div>
+  <SlideWrapper>
+    <SlideHeader>What is a Progressive Web App?</SlideHeader>
+    <SlideBody>
+      <List
+        items={aspects.map(({ buzzword, desc }) => ({ title: buzzword, text: desc }))}
+      />
+    </SlideBody>
+  </SlideWrapper>
 );
 
 export default ProgressiveWebApp;

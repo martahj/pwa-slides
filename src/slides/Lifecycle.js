@@ -1,4 +1,6 @@
 import React from 'react';
+import SlideWrapper from '../containers/SlideWrapper';
+import SlideHeader from '../components/SlideHeader';
 
 /*
   Register
@@ -9,9 +11,11 @@ import React from 'react';
 */
 
 const Lifecycle = () => (
-  <div>
-   Lifecycle
-  </div>
+  <SlideWrapper>
+    <SlideHeader>
+      Lifecycle
+    </SlideHeader>
+  </SlideWrapper>
 );
 
 export default Lifecycle;

@@ -1,10 +1,12 @@
 import React from 'react';
+import SlideWrapper from '../containers/SlideWrapper';
+import SlideHeader from '../components/SlideHeader';
+import SlideBody from '../components/SlideBody';
+import CodeBlock from '../components/CodeBlock';
+import List from '../components/List';
 
-const Sync = () => (
-  <div>
-  Sync
-  {`
-    // Register your service worker:
+const code = `
+// Register your service worker:
 navigator.serviceWorker.register('/sw.js');
 
 // Then later, request a one-off sync:
@@ -17,16 +19,29 @@ self.addEventListener('sync', function(event) {
     event.waitUntil(doSomeStuff());
   }
 });
+`
 
-- schedule event for when the user has connectiviy, which could be now or later
-- protects you against navigations and tab closures during data send
-- doSomeStuff should return a promise
-- if promise resolves, yay
-- if it fails, another sync will be scheduled
-- works when the page isn't open
-- sync names should be unique
-  `}
-  </div>
+const bullets = [
+  `Schedule event for when the user has connectiviy, which could be now or later`,
+  `Works when the page isn't open; protects you against navigations and tab
+    closures during data send`,
+  `doSomeStuff should return a promise`,
+  `Sync names should be unique`,
+  `If it fails, another sync will be scheduled`
+];
+const Sync = () => (
+  <SlideWrapper>
+    <SlideHeader>Sync Event</SlideHeader>
+    <SlideBody>
+      <CodeBlock>
+        {code}
+      </CodeBlock>
+      <List
+        useBullets
+        items={bullets}
+      />
+    </SlideBody>
+  </SlideWrapper>
 );
 
 export default Sync;
