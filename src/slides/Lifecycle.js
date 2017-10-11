@@ -57,7 +57,6 @@ class Lifecycle extends PureComponent<LifecycleProps, LifecycleState> {
 
   handleKeyPress = (event): void => {
     const { keyCode } = event;
-    console.log('handling key press');
     if (keyCode === 13) this.setState(toggleBoldOn);
   }
 
