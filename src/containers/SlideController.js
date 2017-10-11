@@ -40,10 +40,12 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
 
   componentWillMount() {
     window.addEventListener('resize', this.updateNodeDimensions);
+    window.addEventListener('keydown', this.handleKeyPress);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateNodeDimensions);
+    window.removeEventListener('keydown', this.handleKeyPress);
   }
 
   handleKeyPress = (event): void => {
@@ -56,7 +58,7 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
     this.setState(decrementSlide);
   }
 
-  handleForwardPress = () => {
+  handleForwardPress = (): void => {
     this.setState(incrementSlide);
   }
 
@@ -66,9 +68,7 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
   }
 
   updateNodeDimensions = () => {
-    console.log('updating node dimensins');
     const { width, height } = this.node.getBoundingClientRect();
-    console.log('got width', width);
     this.setState({
       slideDimensions: { width, height },
     })
@@ -81,8 +81,8 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
     return (
       <div
         style={{ width: '100%', height: '100%', overflow: 'hidden', backgroundColor: 'white'}}
-        tabIndex="0"
-        onKeyDown={this.handleKeyPress}
+        // tabIndex="0"
+        // onKeyDown={this.handleKeyPress}
         ref={this.getNode}
         >
           <div style={{
@@ -103,7 +103,10 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
                     display: 'flex',
                   }}
                   >
-                    {child}
+                    {React.cloneElement(child, {
+                      activeSlide: i === currentSlide
+                    })}
+                    {/* {child} */}
                 </div>
               );
             })}

@@ -35,10 +35,16 @@ const Registration = () => (
       <CodeBlock>
         {code}
       </CodeBlock>
-      <List
+      {/* <List
         items={bullets}
         useBullets
-      />
+      /> */}
+      <div>
+        <List
+          items={bullets}
+          useBullets
+        />
+      </div>
     </SlideBody>
   </SlideWrapper>
 );

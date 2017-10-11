@@ -28,6 +28,7 @@ const bullets = [
   `Can provide a fallback page or image`,
   `Responses can only be read once, so must be cloned in order to return the
     request to the browser and put it in the cache`,
+  `Don't cache bad assets! Have to check manually for status code`,
 ];
 
 const Fetch = () => (

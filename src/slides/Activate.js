@@ -46,6 +46,7 @@ const bullets = [
   'Happens after a successful install',
   `Updated service workers will install but will not activate until there
     are no more pages loaded using the old service worker`,
+  `Browser will detect that service worker has been updated`,
   `When the service worker updates, it is free to take actions that would have
     broken the previous one, such as deleting old caches`,
   `An updated service worker may update cache number to show that it is using
@@ -61,12 +62,14 @@ const Activate = () => (
       Activate Event
     </SlideHeader>
     <SlideBody>
-      <CodeBlock>
-        {installCode}
-      </CodeBlock>
-      <CodeBlock>
-        {activateCode}
-      </CodeBlock>
+      <div style={{ display: 'flex' }}>
+        <CodeBlock>
+          {installCode}
+        </CodeBlock>
+        <CodeBlock>
+          {activateCode}
+        </CodeBlock>
+      </div>
       <List
         items={bullets}
         useBullets

@@ -7,13 +7,15 @@ type SlideWrapperProps = {
 };
 
 const slideWrapperStyle = {
-  backgroundColor: COLOR_PALETTE.C,
-  color: COLOR_PALETTE.D,
+  backgroundColor: COLOR_PALETTE.E,
+  color: COLOR_PALETTE.C,
   width: '100%',
   height: '100%',
   display: 'flex',
   flexWrap: 'wrap',
   alignContent: 'flex-start',
+  flexWrap: 'wrap',
+  padding: '5%',
 };
 
 const SlideWrapper = (props: SlideWrapperProps)=> (

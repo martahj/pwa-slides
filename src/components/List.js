@@ -27,13 +27,13 @@ const List = ({
       }}
     >
       {items.map((item) => {
-        console.log('got item', item);
         const isString: boolean = typeof item === 'string';
         const text: string = isString ? item : (typeof item === 'object' ? item.text : '');
         return (
           <ListItem
             key={text}
             text={text}
+            moreLineSeparation={!useBullets}
             title={isString ? undefined : item.title}
           />
         )

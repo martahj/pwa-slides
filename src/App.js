@@ -9,10 +9,8 @@ import {
   Registration,
   Install,
   Activate,
-  Message,
   Fetch,
   Sync,
-  Push,
   BrowserSupport,
   Gotchas,
   Resources,
@@ -29,10 +27,8 @@ class App extends Component {
           <Registration />
           <Install />
           <Activate />
-          <Message />
           <Fetch />
           <Sync />
-          <Push />
           <Gotchas />
           <BrowserSupport />
           <Resources />

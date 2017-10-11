@@ -1,9 +1,9 @@
 // @flow
 
 export const COLOR_PALETTE = {
-  A: '#f1f2eb',
-  B: '#a69cac',
-  C: '#d8dad3',
-  D: '#566246',
-  E: '#4a4a48',
+  A: '#1c2321',
+  B: '#7d98a1',
+  C: '#5e6572',
+  D: '#a9b4c2',
+  E: '#eef1ef',
 };

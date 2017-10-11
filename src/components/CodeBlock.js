@@ -6,13 +6,19 @@ type CodeBlockProps = {
   children: string,
 };
 
-const INDENTATION_SIZE = 7;
+const INDENTATION_SIZE = 15;
 
 const codeBlockStyle = {
+  padding: INDENTATION_SIZE,
   backgroundColor: COLOR_PALETTE.B,
-  color: COLOR_PALETTE.A,
-  display: 'inline-block'
-}
+  color: COLOR_PALETTE.E,
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 0,
+  flexShrink: 0,
+  fontSize: 18,
+  margin: INDENTATION_SIZE,
+};
 
 const getIndentationCount = (line: string): ?number => line
   .split('')
@@ -40,5 +46,13 @@ const CodeBlock = (props: CodeBlockProps) => (
     ))}
   </div>
 );
+
+// <div style={{ display: 'flex', flexDirection: 'column', fontSize: 20, flexGrow: 0, flexShrink: 0 }}>
+//   <div style={codeBlockStyle}>
+//     {parseCode(props.children).map(({ indentation, line }) => (
+//       <div style={{ paddingLeft: indentation * INDENTATION_SIZE}}>{`${line}`}</div>
+//     ))}
+//   </div>
+// </div>
 
 export default CodeBlock;

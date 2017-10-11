@@ -7,7 +7,13 @@ import List from '../components/List';
 const bullets = [
   `Require https`,
   `Will not reboot as expected on reload (use 'Update on Reload')`,
-  `Do not rename service worker file`,
+  `Scope!`,
+  `Never rename service worker file - cached html files will refer to old service worker`,
+  `Set cache headers to a short (or 0) max age`,
+  `Want to choose an idle time for the service worker to register`,
+  `Not a reliable way to manage global state`,
+  `Specification is still experimental - guard against missing apis`,
+  `You should still test :)`,
 ];
 
 const Gotchas = () => (
@@ -17,6 +23,7 @@ const Gotchas = () => (
     </SlideHeader>
     <SlideBody>
       <List
+        useBullets
         items={bullets}
       />
     </SlideBody>
