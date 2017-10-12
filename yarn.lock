@@ -5219,9 +5219,9 @@ react-scripts@1.0.14:
   optionalDependencies:
     fsevents "1.1.2"
 
-react-slideshow-display@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-slideshow-display/-/react-slideshow-display-1.0.0.tgz#7fce3ee3782b2ad9668890806bc6e27e4519afe4"
+react-slideshow-display@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-slideshow-display/-/react-slideshow-display-1.1.0.tgz#b3c39fa12516e4726970ad23f96f9404fe540fac"
   dependencies:
     react "^16.0.0"
     react-dom "^16.0.0"
