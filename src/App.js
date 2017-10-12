@@ -17,9 +17,25 @@ import {
 } from './slides/index';
 
 class App extends Component {
+  state = {
+    height: window.innerHeight,
+  }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.updateHeight);
+  }
+
+  componentWillUnmount() {
+    window.addEventListener('resize', this.updateHeight);
+  }
+
+  updateHeight = () => {
+    this.setState({ height: window.innerHeight });
+  }
+
   render() {
     return (
-      <div className="App" style={{ height: window.innerHeight }}>
+      <div className="App" style={{ height: this.state.height }}>
         <SlideController>
           <Intro />
           <ProgressiveWebApp />

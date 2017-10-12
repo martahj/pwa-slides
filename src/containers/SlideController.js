@@ -7,10 +7,8 @@ type SlideControllerProps = {
 
 type SlideControllerState = {
   currentSlide: number,
-  slideDimensions: {
-    width: number,
-    height: number,
-  },
+  oneSlideWidth: number,
+  shouldNotAnimate: boolean,
 };
 
 const incrementSlide = (state: SlideControllerState, props: SlideControllerProps) => ({
@@ -21,26 +19,32 @@ const decrementSlide = (state: SlideControllerState, props: SlideControllerProps
   currentSlide: Math.max(state.currentSlide - 1, 0)
 })
 
-const updateSlideDimensions = (slideDimensions) => (
-  state: SlideControllerState,
-  props: SlideControllerProps,
-) => ({ slideDimensions })
+const enableAnimation = () => ({ shouldNotAnimate: false });
+
+const adjustSlideWidth = width => () => ({
+  oneSlideWidth: width,
+  shouldNotAnimate: true,
+});
 
 class SlideController extends PureComponent<SlideControllerProps, SlideControllerState> {
   constructor(props: SlideControllerProps) {
     super(props);
     this.state = {
       currentSlide: 0,
-      slideDimensions: {
-        width: 0,
-        height: 0,
-      }
+      oneSlideWidth: 0,
+      shouldNotAnimate: false,
     };
   }
 
   componentWillMount() {
     window.addEventListener('resize', this.updateNodeDimensions);
     window.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  componentDidUpdate(prevProps: SlideControllerProps, prevState: SlideControllerState) {
+    if (prevState.shouldNotAnimate) {
+      this.setState(enableAnimation);
+    }
   }
 
   componentWillUnmount() {
@@ -50,15 +54,15 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
 
   handleKeyPress = (event): void => {
     const { keyCode } = event;
-    if (keyCode === 39) this.handleForwardPress();
-    else if (keyCode ===37) this.handleBackPress();
+    if (keyCode === 39) this.goToNextSlide();
+    else if (keyCode ===37) this.goToPreviousSlide();
   }
 
-  handleBackPress = (): void => {
+  goToPreviousSlide = (): void => {
     this.setState(decrementSlide);
   }
 
-  handleForwardPress = (): void => {
+  goToNextSlide = (): void => {
     this.setState(incrementSlide);
   }
 
@@ -67,53 +71,51 @@ class SlideController extends PureComponent<SlideControllerProps, SlideControlle
     this.updateNodeDimensions();
   }
 
-  updateNodeDimensions = () => {
-    const { width, height } = this.node.getBoundingClientRect();
-    this.setState({
-      slideDimensions: { width, height },
-    })
+  updateNodeDimensions = (): void => {
+    const { width } = this.node.getBoundingClientRect();
+    this.setState(adjustSlideWidth(width));
   }
 
   render() {
-    const { slideDimensions, currentSlide } = this.state;
-    const { height, width } = slideDimensions;
+    const { currentSlide, oneSlideWidth, shouldNotAnimate } = this.state;
     const numberSlides = this.props.children.length;
     return (
       <div
-        style={{ width: '100%', height: '100%', overflow: 'hidden', backgroundColor: 'white'}}
-        // tabIndex="0"
-        // onKeyDown={this.handleKeyPress}
+        style={{ width: '100%', height: '100%', overflow: 'hidden', backgroundColor: 'black'}}
         ref={this.getNode}
         >
+        {oneSlideWidth > 0 && (
           <div style={{
-            height,
-            width: width * numberSlides,
+            height: '100%',
+            width: oneSlideWidth * numberSlides,
             display: 'flex',
             flexWrap: 'nowrap',
             position: 'relative',
-            right: currentSlide * width,
-            transition: 'right 500ms ease-in-out'
+            right: currentSlide * oneSlideWidth,
+            transition: `${shouldNotAnimate ? 'none' : 'right'} 500ms ease-in-out`
           }}>
             {React.Children.toArray(this.props.children).map((child, i) => {
               return (
                 <div
                   key={`SLIDE_${i}`}
                   style={{
-                    ...slideDimensions,
+                    height: '100%',
+                    width: oneSlideWidth,
                     display: 'flex',
                   }}
                   >
                     {React.cloneElement(child, {
-                      activeSlide: i === currentSlide
+                      activeSlide: i === currentSlide,
+                      goToPreviousSlide: this.goToPreviousSlide,
+                      goToNextSlide: this.goToNextSlide,
                     })}
-                    {/* {child} */}
                 </div>
               );
             })}
           </div>
+        )}
       </div>
     );
   }
 }
-
 export default SlideController;
